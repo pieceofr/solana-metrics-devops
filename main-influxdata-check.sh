@@ -33,7 +33,7 @@ kapacitor_ping[devnet]="http://127.0.0.1:9092/kapacitor/v1/ping"
 kapacitor_ping[sandbox]="http://127.0.0.1:9092/kapacitor/v1/ping"
 
 # slack webhook
-slack_webhook="https://hooks.slack.com/services/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"
+slack_webhook=
 
 if [[ -z "$slack_webhook"  ]];then
 	echo "ERROR : slack_webhook=$slack_webhook"
@@ -46,9 +46,10 @@ slack_alert(){
 }
 
 
-# check kapacitor alive. must specify ping_cmd. ie  ping_cmd=http://localhost:9086/ping
-# The function results alive_influxdb=1 or 0
-alive_influxdb() {
+# check alive. must specify ping_cmd. ie  ping_cmd=http://localhost:9086/ping .
+# it is better to setup alive_name. ie alive_status=influxdb-sandbox
+# The function results alive_status=1 or 0
+alive_check() {
     for retry in 0 1 2
 	do
         echo retry=$retry
@@ -56,47 +57,28 @@ alive_influxdb() {
 			sleep 5
 		fi
 
-		influxdb_status=$(curl -o /dev/null -s -w "%{http_code}\n" --connect-timeout 10 $ping_cmd)
-		if [[ $influxdb_status == 204 ]];then
-            alive_influxdb=1
-            echo influxdb:$cluster is alive, status:$influxdb_status
+		alive_status_code=$(curl -o /dev/null -s -w "%{http_code}\n" --connect-timeout 10 $ping_cmd)
+		if [[ $alive_status_code == 204 ]];then
+            alive_status=1
+            echo $cluster  $alive_name is alive, status:$alive_status_code
             break
 		else
-            alive_influxdb=0
-            echo influxdb:$cluster is NOT alive, status:$influxdb_status
+            alive_status=0
+            echo $cluster $alive_name is NOT alive, status:$alive_status_code
 		fi
    
 	done
-}
-# check kapacitor alive. must specify ping_cmd. ie  ping_cmd=http://localhost:9092/kapacitor/v1/ping
-# The function results alive_kapacitor=1 or 0
-alive_kapacitor() {
-    for retry in 0 1 2
-	do
-        echo retry=$retry
-		if [[ $retry -gt 0 ]];then
-			sleep 5
-		fi
-        kapacitor_status=$(curl -o /dev/null -s -w "%{http_code}\n" --connect-timeout 10  $ping_cmd)
-        if [[ $kapacitor_status == 204 ]];then
-            alive_kapacitor=1
-            echo influxdb:$cluster is alive, status:$kapacitor_status
-        else
-            alive_kapacitor=0
-            echo influxdb:$cluster is NOT alive, status:$kapacitor_status
-        fi
-    done
 }
 
 
 # main rountine
 check-routine() {
+    alive_name=${influxdb_volume_name[$cluster]}
     ping_cmd=${influxdb_ping[$cluster]}
-    alive_influxdb
-    if [ $alive_influxdb -eq 0 ];then # influxdb=!alive, restart container
+    alive_check
+    if [ $alive_status -eq 0 ];then # influxdb=!alive, restart container
         container_name=${influxdb_volume_name[$cluster]}        # container to be remvoed
-        remove-container
-                                                                # setup container
+        remove-container                                                             
         influxdb_name=${influxdb_volume_name[$cluster]}         # container Names
         influxdb_portmap=${influxdb_volume_portmap[$cluster]}   # container port mapping
         influxdb_config=${influxdb_volume_config[$cluster]}     # container config file mounts
@@ -105,10 +87,10 @@ check-routine() {
         slack_alert
         start-influxdb                                          
     fi
-
+    alive_name=${kapacitor_volume_name[$cluster]}
     ping_cmd=${kapacitor_ping[$cluster]}
-    alive_kapacitor
-    if [ $alive_kapacitor -eq 0 ];then # kapacitor=!alive, restart container
+    alive_check
+    if [ $alive_status -eq 0 ];then # kapacitor=!alive, restart container
         container_name=${kapacitor_volume_name[$cluster]}        # container to be remvoed
         remove-container
         kapacitor_name=${kapacitor_volume_name[$cluster]}

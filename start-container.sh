@@ -53,7 +53,6 @@ start-influxdb(){
     --publish $influxdb_portmap \
     --volume $influxdb_config \
     --volume $influxdb_data \
-    --user "$(id -u):$(id -g)" \
     --log-opt max-size=1g \
     --log-opt max-file=5 \
     influxdb:$influxdb_version -config /etc/influxdb/influxdb.conf)
@@ -69,7 +68,6 @@ start-kapacitor(){
       --publish $kapacitor_portmap \
       --volume $kapacitor_config \
       --volume $kapacitor_data \
-      --user "$(id -u):$(id -g)" \
       --log-opt max-size=1g \
       --log-opt max-file=5  \
       kapacitor:$kapacitor_version)
@@ -81,7 +79,7 @@ influxdb_name=${influxdb_volume_name[$cluster]}         # container Names
 influxdb_portmap=${influxdb_volume_portmap[$cluster]}   # container port mapping
 influxdb_config=${influxdb_volume_config[$cluster]}     # container config file mounts
 influxdb_data=${influxdb_volume_data[$cluster]}         # container data directory mounts
-start-influxdb
+#start-influxdb
 
 kapacitor_name=${kapacitor_volume_name[$cluster]}
 kapacitor_portmap=${kapacitor_volume_portmap[$cluster]}
