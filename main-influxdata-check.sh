@@ -3,6 +3,7 @@ set +e # must set to +e, otherwiser the command exit when error
 set -x
 
 # Setup instruction
+## check/setup path of lib-influxdata-container.sh
 ## setup cluster/hosts/slack
 ### setup cluster to be used, ie. cluster=devnet
 ### setup/check host for each clusters
@@ -12,6 +13,7 @@ set -x
 ### check/set influxdb_volume_name for container name. This name will be used to stop/start container
 ### check/set port map and mount config file and data directories
 
+source /home/sol/metrics-devops/lib-influxdata-container.sh
 #### !!!! setup cluster to use !!!! #####
 cluster=sandbox
 
@@ -32,7 +34,6 @@ kapacitor_ping[sandbox]="http://127.0.0.1:9092/kapacitor/v1/ping"
 
 # slack webhook
 slack_webhook="https://hooks.slack.com/services/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"
-source /home/sol/scripts/lib-influxdata-container.sh
 
 if [[ -z "$slack_webhook"  ]];then
 	echo "ERROR : slack_webhook=$slack_webhook"
