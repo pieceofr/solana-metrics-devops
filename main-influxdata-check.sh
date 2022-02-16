@@ -49,7 +49,7 @@ slack_alert(){
 # check alive. must specify ping_cmd. ie  ping_cmd=http://localhost:9086/ping .
 # it is better to setup alive_name. ie alive_status=influxdb-sandbox
 # The function results alive_status=1 or 0
-alive_check() {
+alive-check() {
     for retry in 0 1 2
 	do
         echo retry=$retry
@@ -75,7 +75,7 @@ alive_check() {
 check-routine() {
     alive_name=${influxdb_volume_name[$cluster]}
     ping_cmd=${influxdb_ping[$cluster]}
-    alive_check
+    alive-check
     if [ $alive_status -eq 0 ];then # influxdb=!alive, restart container
         container_name=${influxdb_volume_name[$cluster]}        # container to be remvoed
         remove-container                                                             
@@ -89,7 +89,7 @@ check-routine() {
     fi
     alive_name=${kapacitor_volume_name[$cluster]}
     ping_cmd=${kapacitor_ping[$cluster]}
-    alive_check
+    alive-check
     if [ $alive_status -eq 0 ];then # kapacitor=!alive, restart container
         container_name=${kapacitor_volume_name[$cluster]}        # container to be remvoed
         remove-container
