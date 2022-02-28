@@ -32,20 +32,6 @@ kapacitor_ping[testnet]="http://127.0.0.1:9092/kapacitor/v1/ping"
 kapacitor_ping[devnet]="http://127.0.0.1:9092/kapacitor/v1/ping"
 kapacitor_ping[sandbox]="http://127.0.0.1:9092/kapacitor/v1/ping"
 
-# slack webhook
-slack_webhook=
-
-if [[ -z "$slack_webhook"  ]];then
-	echo "ERROR : slack_webhook=$slack_webhook"
-	exit 1
-fi
-
-slack_alert(){
-	sdata=$(jq --null-input --arg val "$slacktext" '{"text":$val}')
-	curl -X POST -H 'Content-type: application/json' --data "$sdata" $slack_webhook
-}
-
-
 # check alive. must specify ping_cmd. ie  ping_cmd=http://localhost:9086/ping .
 # it is better to setup alive_name. ie alive_status=influxdb-sandbox
 # The function results alive_status=1 or 0
@@ -84,7 +70,6 @@ check-routine() {
         influxdb_config=${influxdb_volume_config[$cluster]}     # container config file mounts
         influxdb_data=${influxdb_volume_data[$cluster]}         # container data directory mounts
         slacktext="$influxdb_name is restarting!"
-        slack_alert
         start-influxdb                                          
     fi
     alive_name=${kapacitor_volume_name[$cluster]}
@@ -98,7 +83,6 @@ check-routine() {
         kapacitor_config=${kapacitor_volume_config[$cluster]}
         kapacitor_data=${kapacitor_volume_data[$cluster]}
         slacktext="$kapacitor_name is restarting!"
-        slack_alert
         start-kapacitor
     fi
 
