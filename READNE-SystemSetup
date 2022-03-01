@@ -25,3 +25,10 @@
 ## create data directory
 ### mkdir /home/sol/influxdb-devnet
 ### mkdir /home/sol/kapacitor-devent
+
+# install buildkite
+## follow https://buildkite.com/docs/agent/v3/ubuntu
+## add buildkite agent to docker group and restart
+## sudo usermod -aG docker buildkite-agent
+## sudo systemctl stop buildkite-agent.service
+## sudo systemctl start buildkite-agent.service
