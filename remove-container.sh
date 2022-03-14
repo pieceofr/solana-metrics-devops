@@ -3,9 +3,6 @@
 set -x
 set +e
 
-influxdb_version="1.8.1"
-kapacitor_version="1.5"
-
 remove-container() {
   running=$(docker ps --filter "name=$container_name" --format "{{.Names}}")
   if [[ ! ${#running} -eq 0 ]];then
@@ -18,7 +15,16 @@ remove-container() {
     echo remove container: $rm_result
   fi
 }
+
 container_name=influxdb-sandbox
 remove-container
 container_name=kapacitor-sandbox
 remove-container
+container_name=telegraf-sandbox
+remove-container
+container_name=chronograf-sandbox
+remove-container
+
+#container_name=grafana
+#remove-container
+
