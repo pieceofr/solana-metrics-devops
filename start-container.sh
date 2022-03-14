@@ -16,7 +16,7 @@ grafana_version="8.3.1"
 
 # setup cluster
 cluster=sandbox
-source /home/sol/metrics-devops/lib-influxdata-docker-config.sh
+source $PWD/lib-influxdata-docker-config.sh
 
 ## Graphana Config
 declare -A grafana_volume_name
@@ -76,9 +76,8 @@ start-grafana() {
     --env GF_PATHS_CONFIG=/grafana.ini \
     --log-opt max-size=1g \
     --log-opt max-file=5 \
-    grafana:$grafana_version)
+    grafana/grafana:$grafana_version)
 }
-
 
 start-chronograf() {
   start_ch_result=$(docker run \
@@ -98,13 +97,13 @@ influxdb_docker_name=${influxdb_name[$cluster]}         # container Names
 influxdb_docker_portmap=${influxdb_portmap[$cluster]}   # container port mapping
 influxdb_docker_config=${influxdb_config[$cluster]}     # container config file mounts
 influxdb_docker_data=${influxdb_data[$cluster]}         # container data directory mounts
-start-influxdb
+#start-influxdb
 
 kapacitor_docker_name=${kapacitor_name[$cluster]}
 kapacitor_docker_portmap=${kapacitor_portmap[$cluster]}
 kapacitor_docker_config=${kapacitor_config[$cluster]}
 kapacitor_docker_data=${kapacitor_data[$cluster]}
-start-kapacitor
+#start-kapacitor
 
 grafana_name=${grafana_volume_name[$cluster]}
 grafana_portmap=${grafana_volume_portmap[$cluster]}
