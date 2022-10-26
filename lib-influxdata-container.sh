@@ -3,7 +3,7 @@ source $PWD/lib-influxdata-docker-config.sh
 set +e
 set -x
 # specify docker images 
-influxdb_docker_version="1.7"
+influxdb_docker_version="1.8.10"
 kapacitor_docker_version="1.5"
 chronograf_docker_version="1.8.8"
 

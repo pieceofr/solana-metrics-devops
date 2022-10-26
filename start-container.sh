@@ -9,13 +9,13 @@
 ## kapacitor_data=kapacitor_data[devnet]
 set -ex
 # specify docker images 
-influxdb_docker_version="1.7"
+influxdb_docker_version="1.8.10"
 kapacitor_docker_version="1.5"
 chronograf_docker_version="1.8.8"
 grafana_version="8.3.1"
 
-# setup cluster
-cluster=sandbox
+# ****setup cluster**** #
+cluster=testnet
 source $PWD/lib-influxdata-docker-config.sh
 
 ## Graphana Config
@@ -23,13 +23,13 @@ declare -A grafana_volume_name
 grafana_volume_name[internal]=grafana
 
 declare -A grafana_volume_config8
-grafana_volume_config[internal]=/home/sol/metrics-config/grafana-internal.ini:/grafana.ini:ro
+grafana_volume_config[internal]=/root/metrics-config/grafana-internal.ini:/grafana.ini:ro
 
 declare -A grafana_volume_data
-grafana_volume_data_env[internal]=/home/sol/grafana_data:/var/lib/grafana
+grafana_volume_data_env[internal]=/root/grafana_data:/var/lib/grafana
 
 declare -A grafana_volume_cert
-grafana_volume_cert[internal]=/home/sol/certs:/certs:ro
+grafana_volume_cert[internal]=/root/certs:/certs:ro
 
 
 start-influxdb(){
@@ -97,13 +97,13 @@ influxdb_docker_name=${influxdb_name[$cluster]}         # container Names
 influxdb_docker_portmap=${influxdb_portmap[$cluster]}   # container port mapping
 influxdb_docker_config=${influxdb_config[$cluster]}     # container config file mounts
 influxdb_docker_data=${influxdb_data[$cluster]}         # container data directory mounts
-#start-influxdb
+start-influxdb
 
 kapacitor_docker_name=${kapacitor_name[$cluster]}
 kapacitor_docker_portmap=${kapacitor_portmap[$cluster]}
 kapacitor_docker_config=${kapacitor_config[$cluster]}
 kapacitor_docker_data=${kapacitor_data[$cluster]}
-#start-kapacitor
+start-kapacitor
 
 grafana_name=${grafana_volume_name[$cluster]}
 grafana_portmap=${grafana_volume_portmap[$cluster]}
@@ -117,4 +117,4 @@ chronograf_docker_portmap=${chronograf_portmap[$cluster]}
 chronograf_docker_data=${chronograf_data[$cluster]}
 chronograf_docker_public_url=${chronograf_env_public_url[cluster]}
 chronograf_docker_influx_url=${chronograf_influx_url[$cluster]}
-start-chronograf
+#start-chronograf

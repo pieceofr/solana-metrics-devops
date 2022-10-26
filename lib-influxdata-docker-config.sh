@@ -8,17 +8,17 @@ influxdb_name[sandbox]=influxdb-sandbox
 
 declare -A influxdb_portmap
 #influxdb_portmap[mainnet]=8087:8086
-influxdb_portmap[testnet]=8088:8086
+influxdb_portmap[testnet]=8085:8086
 #influxdb_portmap[devnet]=8089:8086
 influxdb_portmap[sandbox]=8086:8086
 
 declare -A influxdb_config
-influxdb_config[testnet]=/home/sol/metrics-config/influxdb/influxdb-testnet.conf:/etc/influxdb/influxdb.conf
-influxdb_config[sandbox]=/home/sol/metrics-config/influxdb/influxdb-sandbox.conf:/etc/influxdb/influxdb.conf
+influxdb_config[testnet]=/root/metrics-config/influxdb-testnet.conf:/etc/influxdb/influxdb.conf
+influxdb_config[sandbox]=/root/metrics-config/influxdb-sandbox.conf:/etc/influxdb/influxdb.conf
 
 declare -A influxdb_data
-influxdb_data[testnet]=/home/sol/influxdb-data/influxdb-testnet:/var/lib/influxdb
-influxdb_data[sandbox]=/home/sol/influxdb-data/influxdb-sandbox:/var/lib/influxdb
+influxdb_data[testnet]=/root/influxdb-data/influxdb-testnet:/var/lib/influxdb
+influxdb_data[sandbox]=/root/influxdb-data/influxdb-sandbox:/var/lib/influxdb
 
 # kapacitor
 declare -A kapacitor_name
@@ -32,8 +32,8 @@ kapacitor_portmap[testnet]=9092:9092
 kapacitor_portmap[sandbox]=9092:9092
 
 declare -A kapacitor_config
-kapacitor_config[testnet]=/home/sol/metrics-config/kapacitor/kapacitor-testnet.conf:/etc/kapacitor/kapacitor.conf
-kapacitor_config[sandbox]=/home/sol/metrics-config/kapacitor/kapacitor-sandbox.conf:/etc/kapacitor/kapacitor.conf
+kapacitor_config[testnet]=/root/metrics-config/kapacitor-testnet.conf:/etc/kapacitor/kapacitor.conf
+kapacitor_config[sandbox]=/root/metrics-config/kapacitor-sandbox.conf:/etc/kapacitor/kapacitor.conf
 
 declare -A kapacitor_data
 kapacitor_data[testnet]=/home/sol/kapacitor-data/kapacitor-testnet:/var/lib/kapacitor
@@ -47,7 +47,7 @@ declare -A chronograf_portmap
 chronograf_portmap[sandbox]=8888:8888
 
 declare -A chronograf_config
-chronograf_config[sandbox]=/home/sol/metrics-config/chronograf/chronograf-sandbox.conf:/etc/chronograf/chronograf.conf
+chronograf_config[sandbox]=/root/metrics-config/chronograf-sandbox.conf:/etc/chronograf/chronograf.conf
 
 declare -A chronograf_data
 chronograf_data[sandbox]=/home/sol/chronograf-data/chronograf-sandbox:/var/lib/chronograf

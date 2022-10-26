@@ -16,14 +16,14 @@ remove-container() {
   fi
 }
 
-container_name=influxdb-sandbox
+container_name=influxdb-testnet
 remove-container
-container_name=kapacitor-sandbox
+container_name=kapacitor-testnet
 remove-container
-container_name=telegraf-sandbox
-remove-container
-container_name=chronograf-sandbox
-remove-container
+# container_name=telegraf-testnet
+# remove-container
+# container_name=chronograf-testnet
+# remove-container
 
 #container_name=grafana
 #remove-container

@@ -35,8 +35,8 @@ kapacitor_ping[sandbox]="http://127.0.0.1:9092/kapacitor/v1/ping"
 declare -A chronograf_ping
 chronograf_ping[sandbox]="http://127.0.0.1:8888"
 
-# slack webhook
-slack_webhook="https://hooks.slack.com/services/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"
+# slack webhook, the webhook is invalid
+slack_webhook=""
 
 echo $(date -u) === start script ===
 
@@ -103,21 +103,21 @@ check-routine() {
         slack_alert
         start-kapacitor
     fi
-    alive_name=${chronograf_name[$cluster]}
-    ping_cmd=${chronograf_ping[$cluster]}
-    alive-check
-    if [ $alive_status -eq 0 ];then
-        remove_container_name=${chronograf_name[$cluster]}
-        remove-container
-        chronograf_docker_name=${chronograf_name[$cluster]}
-        chronograf_docker_portmap=${chronograf_portmap[$cluster]}
-        chronograf_docker_data=${chronograf_data[$cluster]}
-        chronograf_docker_public_url=${chronograf_env_public_url[cluster]}
-        chronograf_docker_influx_url=${chronograf_influx_url[$cluster]}
-        slacktext="$chronograf_docker_name is restarting!"
-        slack_alert
-        start-chronograf
-    fi
+    # alive_name=${chronograf_name[$cluster]}
+    # ping_cmd=${chronograf_ping[$cluster]}
+    # alive-check
+    # if [ $alive_status -eq 0 ];then
+    #     remove_container_name=${chronograf_name[$cluster]}
+    #     remove-container
+    #     chronograf_docker_name=${chronograf_name[$cluster]}
+    #     chronograf_docker_portmap=${chronograf_portmap[$cluster]}
+    #     chronograf_docker_data=${chronograf_data[$cluster]}
+    #     chronograf_docker_public_url=${chronograf_env_public_url[cluster]}
+    #     chronograf_docker_influx_url=${chronograf_influx_url[$cluster]}
+    #     slacktext="$chronograf_docker_name is restarting!"
+    #     slack_alert
+    #     start-chronograf
+    # fi
 }
 
 # main function

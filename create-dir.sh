@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 set -ex 
+## File structure
+## config file : all config is in the same dir
+## data : each cluster and application data are in their folder
+## ie : /root/influxdata/influxdb-testnet/
 
-influxdata_data=/home/sol/influxdata
-influxdata_config=/home/sol/influxdata-config
+influxdata_data=/root/influxdata
+influxdata_config=/root/influxdata-config
 influxdb_dir=("influxdb-devnet" "influxdb-testnet" "influxdb-mainnet")
 kapacitor_dir=("kapacitor-devnet" "kapacitor-testnet" "kapacitor-mainnet")
 
