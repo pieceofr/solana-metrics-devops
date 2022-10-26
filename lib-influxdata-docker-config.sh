@@ -36,8 +36,8 @@ kapacitor_config[testnet]=/root/metrics-config/kapacitor-testnet.conf:/etc/kapac
 kapacitor_config[sandbox]=/root/metrics-config/kapacitor-sandbox.conf:/etc/kapacitor/kapacitor.conf
 
 declare -A kapacitor_data
-kapacitor_data[testnet]=/home/sol/metrics-data/kapacitor-testnet:/var/lib/kapacitor
-kapacitor_data[sandbox]=/home/sol/metrics-data/kapacitor-sandbox:/var/lib/kapacitor
+kapacitor_data[testnet]=/root/metrics-data/kapacitor-testnet:/var/lib/kapacitor
+kapacitor_data[sandbox]=/root/metrics-data/kapacitor-sandbox:/var/lib/kapacitor
 
 ## chronograf Config
 declare -A chronograf_name
@@ -50,7 +50,7 @@ declare -A chronograf_config
 chronograf_config[sandbox]=/root/metrics-config/chronograf-sandbox.conf:/etc/chronograf/chronograf.conf
 
 declare -A chronograf_data
-chronograf_data[sandbox]=/home/sol/metrics-data/chronograf-sandbox:/var/lib/chronograf
+chronograf_data[sandbox]=/root/metrics-data/chronograf-sandbox:/var/lib/chronograf
 
 declare -A chronograf_influx_url
 chronograf_influx_url[sandbox]=http://127.0.0.1:8086
