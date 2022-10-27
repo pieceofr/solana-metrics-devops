@@ -19,10 +19,10 @@ influxdb_config[devnet]=/root/metrics-config/influxdb-devnet.conf:/etc/influxdb/
 influxdb_config[sandbox]=/root/metrics-config/influxdb-sandbox.conf:/etc/influxdb/influxdb.conf
 
 declare -A influxdb_data
-influxdb_data[mainnet]=/var/lib/influxdb-testnet:/var/lib/influxd
-influxdb_data[testnet]=/var/lib/influxdb-testnet:/var/lib/influxd
-influxdb_data[devnet]=/var/lib/influxdb-testnet:/var/lib/influxd
-influxdb_data[sandbox]=/var/lib/influxdb-testnet:/var/lib/influxd
+influxdb_data[mainnet]=/var/lib/influxdb-testnet:/var/lib/influxdb
+influxdb_data[testnet]=/var/lib/influxdb-testnet:/var/lib/influxdb
+influxdb_data[devnet]=/var/lib/influxdb-testnet:/var/lib/influxdb
+influxdb_data[sandbox]=/var/lib/influxdb-testnet:/var/lib/influxdb
 
 # kapacitor
 declare -A kapacitor_name
