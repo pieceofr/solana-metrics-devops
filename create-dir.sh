@@ -4,6 +4,7 @@ set -ex
 ## config file : all config is in the same dir
 ## data : each cluster and application data are in their folder
 ## ie : /root/influxdata/influxdb-testnet/
+## if the directory is the symbolic link, the docker may not work for it
 
 influxdata_data=/root/influxdata
 influxdata_config=/root/influxdata-config
