@@ -15,7 +15,7 @@ set -x
 
 source $PWD/lib-influxdata-container.sh
 #### !!!! setup cluster to use !!!! #####
-cluster=sandbox
+cluster=testnet
 
 # specify influxdb hosts and cmd
 declare -A influxdb_ping
